@@ -80,28 +80,20 @@ my-video/
 
 ---
 
-## 硬性自检协议（贯穿整个 Skill）
+## Validation Protocol（贯穿整个 Skill）
 
-下面三个产出，每一个**完成后必须走自检 → 修复 → 再汇报 / 推进**：
+下面三个产出，每一个**完成后必须走 validate + 自检 → 修复 → 再汇报/推进**：
 
-| 产出 | 自检清单出处 |
-|---|---|
-| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 三层自检（形式 / 风骨 / 念出来） |
-| `outline.md` | [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) 自检 |
-| 单章实现完成 | [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 完工自检（**8 项核心阻塞 + 10 项建议需说明**，详见 CHEATSHEET） |
+| 产出 | 自检出处 | 程序化检测 |
+|---|---|---|
+| `script.md` | [`SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) 三层自检 | — |
+| `outline.md` | [`OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) 自检 | — |
+| 单章实现完成 | [`CHAPTER-CRAFT-CHEATSHEET.md`](references/CHAPTER-CRAFT-CHEATSHEET.md) 18项自检 | `npm run validate`（C1/C2/C4/C6/C7） |
 
-**执行方式**（按能力降级，**优先用更隔离的方式**）：
+**执行方式**（按能力降级）：**Agent Teams（最优）→ subAgent → self review**
 
-1. **Agent Teams（最优）**：开一个独立的 reviewer agent，给它"产出文件
-   路径 + 对应清单 + 关键上下文"，让它逐项核查并**严格汇报结论**
-   （哪几条 pass / 哪几条 fail + 证据 + 改写建议）。
-2. **subAgent（次优）**：没有 Teams 能力但能开 subagent 就用 subagent
-   走同样流程。
-3. **自检（兜底）**：当前 agent 都没有上述能力，就自己**严格逐项**
-   核查 —— 不允许目测一遍就放行。
-
-**铁律**：拿到结论后**先按 fail 项把产出改完**，再向用户汇报"做完了
-+ 自检结论 + 改了什么"。**直接拿原始结论汇报但不修复 = 违规**。
+> **铁律**：fail 项必须修复后才准汇报。直接汇报原始结论但不修复 = 违规。
+> 详见 [WORKFLOW.md](WORKFLOW.md) §自检协议细节、[DESIGN-DECISIONS.md](references/DESIGN-DECISIONS.md) §Validation Protocol
 
 ---
 
@@ -146,7 +138,7 @@ Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束
 
 1. **生成 `script.md`**：按 [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md)
    的规则把 article 转 B 站风口播稿。**保留 `article.md` 不删**——它是
-   outline 写信息池和章节实现画面时的细节源（双源原则）。
+   outline 写信息池和章节实现画面时的细节源。（详见 [DESIGN-DECISIONS.md](references/DESIGN-DECISIONS.md) §双源原则）
 2. **生成 `outline.md`**：按 [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md)
    规则切章节 + 切 step + 每章首段抽**信息池**。
 
@@ -160,9 +152,7 @@ Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束
 | 步级关系名前缀（"反差对照" / "递进列表" / "金句" 等可选 hint） | 持续微动 / 错峰量等微观节奏 |
 
 > **outline 不写动画的理由**：写死动画 = chapter agent 退化为翻译机；
-> 留白让 chapter agent 在每步开工时按 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-> 的"内容驱动决策树"自由设计，才有真正的视频感。详见
-> [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) Part 0 原则 7。
+> 留白让 chapter agent 按内容驱动自由设计。（详见 [DESIGN-DECISIONS.md](references/DESIGN-DECISIONS.md) §Outline边界）
 
 **落盘后必须先走自检再进 Checkpoint Plan**：按上文「硬性自检协议」分别
 对 `script.md` / `outline.md` 执行（优先 Agent Teams → subAgent → 自检），
@@ -198,35 +188,12 @@ Phase 2.4 的"实现单章"会重复 N 次 —— 每次都要回看核心约束
 接下来一次对齐 5 件事：
 
   1. 稿子 (script.md) 要不要改？
-     可以直接编辑文件，或口头告诉我修改方向。
-
-  2. 开发计划 (outline.md) 要不要改？重点看：
-     - 章节切分 / step 数 / 估时是否合理（合理判断：每章 30~60s）
-     - 每步屏幕内容是否清晰
-     - 每章首段「信息池」是否有足够的 article 细节供画面挂
-     - 末尾素材清单是否完整
-
-  3. 选哪个主题？我的推荐：
-     ★ <推荐 1：nameZh (id)> — 因为 <bestFor 命中>；<descriptionZh 摘要>
-     ★ <推荐 2 / 推荐 3>
-     其它可选：<剩余主题，nameZh + 一句话>
-     也可以让我帮你做新主题（详见 references/THEMES.md）。
-
-  4. 真素材怎么准备？粗看本视频要的图：<列粗略清单>
-     a) 我从 <现有素材路径> 帮你挑   b) 你自己提供   c) 全部 placeholder
-
-  5. 开发模式选哪个？
-
-     **第 1 章无论哪种模式都必须主线程做完 + 用户验收**（强制 anchor）。
-     差异在第 2 章及之后：
-
-     A) 默认 · 逐章确认（推荐）
-        每章做完都暂停验收 → 风险可控 / 节奏最稳
-     B) 第 1 章后顺序开发（不并行）
-        第 2~N 章主线程顺序做完后统一验收 → 速度中 / 适合 agent 不支持并行
-     C) 第 1 章后并行开发（subagent）
-        第 2~N 章用 subagent 并行 → 最快 / 用户控并行数（一次几章）
-        ⚠️ 风格各章会有差异（这是预期，主题禁区兜底）
+  2. 开发计划 (outline.md)？重点：章节切分/step数/信息池/素材清单
+  3. 选主题？推荐 ★<id> (bestFor命中) / 其它可选：<列表>
+  4. 素材准备？a)我挑 b)你提供 c)全部 placeholder
+  5. 开发模式？A逐章(推荐) / B顺序 / C并行
+     > 第1章无论哪种模式都必须主线程+用户验收(强制anchor)
+     > 详细模式说明见 Phase 2.3
 ```
 
 收到反馈后：
@@ -266,14 +233,8 @@ rm -rf presentation/src/chapters/01-example
 **核心**：第 1 章 = 完整版本一次到位（节奏 + 视觉 + 真素材齐全）。
 **没有"骨架版"概念** —— 第一章就要做出**用户能直接验收**的样板。
 
-为什么第 1 章必须主线程：
-
-- 它是 [`CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) 这套指引在**当前
-  主题 + 当前题材**下的第一次落地
-- 如果指引有盲区 / 主题颜色 / 字体 token 不够用，第 1 章一定会暴露 ——
-  这时候有人类反馈就能修指引 / 调主题，**早改成本最低**
-- 后续章节（无论顺序 / 并行）都要参考第 1 章的代码模式，所以第 1 章 =
-  当次项目的"风格锚点（不强求章节间一致，但单章自身得有完整说服力）"
+> **第1章必须在主线程完成并验收，作为后续风格 anchor（强制）。**
+> 原因：首次落地暴露指引盲区+验证主题 token，早改成本最低。（详见 [DESIGN-DECISIONS.md](references/DESIGN-DECISIONS.md) §第一章Anchor）
 
 **做完第 1 章后必须停下来**等用户验收：
 
@@ -361,6 +322,19 @@ rm -rf presentation/src/chapters/01-example
 长度变化）后，**bump** `presentation/src/hooks/useStepper.ts` 的
 `STORAGE_KEY`（如 `v4` → `v5`），避免持久化游标落到不存在的 step 上。
 
+### 2.6 章节完成后验证（推荐）
+
+每章完成后运行程序化校验：
+
+```bash
+cd presentation && npm run validate
+```
+
+自动检查：narrations 对齐 / TypeScript 编译 / 字号下限 / CSS prefix 隔离 / 动画时长 ≤ 口播时长  
+（详见 [`references/VALIDATION.md`](references/VALIDATION.md)）
+
+**validation fail 时禁止进入下一章**。这是 FAILURE_ANALYSIS #16 #20 #26 #27 的程序化防护。
+
 ---
 
 ## Checkpoint Audio —— 是否合成音频（**硬节点**）
@@ -411,23 +385,19 @@ npm run synthesize-audio     # 调 mmx 串行合成；增量、跳过已存在
 
 ---
 
-## 十条原则（一句话清单）
+## CORE PRINCIPLES（完整版含代码约束见 [`references/CORE-PRINCIPLES.md`](references/CORE-PRINCIPLES.md)）
 
-完整展开见 [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md)
-Part 0 —— **写章节时回那里查**，下面只是索引。
+从 FAILURE_ANALYSIS.md 45 个真实 Case 反向聚类的**父规则**——每条覆盖多个具体 Failure。
 
-| # | 原则 | 一句话 |
-|---|---|---|
-| 1 | 16:9 固定舞台 | 内容 1920×1080 + transform scale，没有响应式 |
-| 2 | 全局 step 计数器 | 章节是 step 的纯函数，无定时器 |
-| 3 | 每步独占整屏 | `if (step === N) return <FullScene />` |
-| 4 | 口播节拍 = step | 一节拍 = 一 step = 一聚焦想法 |
-| 5 | 隐藏的边角控件 | 进度条 / 翻页器默认 opacity 0 |
-| 6 | 舞台无 chrome | 没有 header / footer / 页码 / 品牌条 |
-| 7 | **内容驱动动画** | 先找内在动作，找不到才入场动画兜底；持续微动慎用 |
-| 8 | 多点逐个揭示 | 1 项 = 1 step，禁同步 stagger 上 N 项 |
-| 9 | 整片同一主题 | 章节间不翻表面色；**颜色 / 字体走 token**，其它尺度章节自由 |
-| 10 | 双源原则 | script 定节拍，**article 定画面密度**（落到信息池） |
+| # | 原则 | 一句话 | 防住什么 |
+|---|------|--------|---------|
+| 1 | **Step = 节拍** | 一步只表达一个聚焦想法，像镜头切换 | 清单一次性展示 / 无节奏变化 |
+| 2 | **一屏一主焦点** | 用户注意力不能分裂 | 密集文字 / 多动画竞争 |
+| 3 | **动画必须有语义** | 表达对比/递进/因果/冲击，禁止装饰性 motion | 同一动画到底 / 动画超时 |
+| 4 | **信息密度 > 口播** | 屏幕必须补充口播未念的信息（双源原则） | 画面=口播打字 / 素材浪费 |
+| 5 | **Token 统一，章节自由** | 主题管气质（颜色/字体），章节管创意（动画/节奏） | 硬编码主题值 / 安全区单调 |
+
+> 原 10 条详细原则（含技术约束：16:9舞台/step计数器/隐藏控件等）见 CORE-PRINCIPLES.md
 
 ---
 
@@ -449,12 +419,17 @@ Part 8「常见反馈速查」。**关键**：先定位是哪一层（节奏 / �
 | `references/presets/` 下的各类模板 | Phase 0 选读 | 用于各类内容题材的预处理规则 |
 | [`references/SCRIPT-STYLE.md`](references/SCRIPT-STYLE.md) | Phase 1.2 必读 | 文章 → 口播稿规则、平台变体 |
 | [`references/OUTLINE-FORMAT.md`](references/OUTLINE-FORMAT.md) | Phase 1.2 必读 | outline.md 字段 spec、命名约定、章节切分、信息池 |
+| [`references/CORE-PRINCIPLES.md`](references/CORE-PRINCIPLES.md) | **想理解"为什么"时** | 5 条高层原则 + 10 条详细原则（从 CHAPTER-CRAFT Part0 提取） |
+| [`references/DESIGN-DECISIONS.md`](references/DESIGN-DECISIONS.md) | **边界情况 / 首次使用** | 设计决策背后的理由（双源/outline边界/anchor/并行/validate） |
 | [`references/CHAPTER-CRAFT.md`](references/CHAPTER-CRAFT.md) | **第 1 章必读**（完整版，含教程式解释） | Part 0~8 全部内容 |
 | [`references/CHAPTER-CRAFT-CHEATSHEET.md`](references/CHAPTER-CRAFT-CHEATSHEET.md) | **第 2~N 章必读**（浓缩红线版） | 硬规则 / 代码约束 / 自检清单 / 反馈速查 |
-| `MATERIAL-INDEX.md` | **第 2~N 章必读**（素材萃取指南） | 位于项目根目录。article.md 素材索引：按章节查表，含来源定位/渲染建议/口播补充/SKIP 区域 |
-| [`references/EXAMPLES/`](references/EXAMPLES/) | **可选** —— 看结构 | 章节结构示意（hook / list-reveal / case-tech-review）；**不是抄袭模板** |
+| `MATERIAL-INDEX.md` | **第 2~N 章必读**（素材萃取指南） | 位于项目根目录。article.md 素材索引：按章节查表 |
+| [`references/EXAMPLES/`](references/EXAMPLES/) | **可选** —— 看结构 | 章节结构示意；**不是抄袭模板** |
 | [`references/THEMES.md`](references/THEMES.md) | 选 / 造 / 切主题时 | 完整 token 契约 + 内置主题清单 + 创作流程 |
 | [`references/AUDIO.md`](references/AUDIO.md) | Phase 3 才读 | MiniMax CLI、TTS 退化路径、故障排查 |
 | [`references/RECORDING.md`](references/RECORDING.md) | Phase 4 才读 | 录屏工具 + 后期合成 |
-| [`themes/`](themes) | Checkpoint Plan / Phase 1.2 时翻 | 内置主题（每个含 `theme.json` + `tokens.css`） |
+| [`references/VALIDATION.md`](references/VALIDATION.md) | validate 报错时 | 检测项详解、C6 动画时长说明、修复建议 |
+| `themes/` | Checkpoint Plan / Phase 1.2 时翻 | 内置主题（每个含 `theme.json` + `tokens.css`） |
 | [`scripts/scaffold.sh`](scripts/scaffold.sh) | Phase 2.1 跑一次 | 一键项目脚手架 |
+| [`scripts/validate.sh`](scripts/validate.sh) | 每章完成后 | 自动化校验脚本（C1/C2/C4/C6/C7） |
+| `WORKFLOW.md` | 工作流细节 / 风险排查时 | 风险矩阵 R1-R13 / 工作流补充 |
