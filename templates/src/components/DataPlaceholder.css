@@ -1,0 +1,253 @@
+/* ============================================================
+ * DataPlaceholder.css — 数据/骨架屏占位符样式
+ * ============================================================ */
+
+.ph-data {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: var(--r-card, 8px);
+  background: var(--surface-2);
+  border: 2px dashed var(--rule);
+  min-height: 120px;
+}
+
+/* ════════════ 通用骨架动画 ════════════ */
+
+.ph-data__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ph-data__th,
+.ph-data__td,
+.ph-data__line,
+.ph-data__dot,
+.ph-data__tick,
+.ph-data__card-icon,
+.ph-data__card-title,
+.ph-data__card-body,
+.ph-data__tl-title,
+.ph-data__tl-desc {
+  background: var(--surface-3);
+  border-radius: 4px;
+  animation: ph-shimmer 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes ph-shimmer {
+  from { opacity: 0.3; }
+  to   { opacity: 0.65; }
+}
+
+/* ════════════ Table 形状 ════════════ */
+
+.ph-data__header {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ph-data__th {
+  flex: 1;
+  height: 14px;
+}
+
+.ph-data__tr {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ph-data__td {
+  height: 28px;
+}
+
+/* ════════════ List 形状 ════════════ */
+
+.ph-data__li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ph-data__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ph-data__line {
+  height: 16px;
+  flex: 1;
+}
+
+/* ════════════ Chart 形状 ════════════ */
+
+.ph-data__chart {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0;
+  padding: 16px 20px;
+  height: 160px;
+}
+
+.ph-data__axis-y {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  padding-right: 8px;
+  flex-shrink: 0;
+}
+
+.ph-data__tick {
+  width: 100%;
+  height: 1px;
+}
+
+.ph-data__plot {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 100%;
+  border-left: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 4px;
+}
+
+.ph-data__bar {
+  flex: 1;
+  max-width: 48px;
+  min-width: 12px;
+  background: var(--accent-soft);
+  border-radius: 3px 3px 0 0;
+  animation: ph-bar-grow 800ms var(--ease-expo) both;
+}
+
+@keyframes ph-bar-grow {
+  from { height: 0; }
+  to   { height: inherit; }
+}
+
+.ph-data__svg-line {
+  width: 100%;
+  height: 100%;
+  color: var(--accent-soft);
+}
+
+/* ════════════ Card Grid 形状 ════════════ */
+
+.ph-data__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.ph-data__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 12px;
+  border-radius: var(--r-card, 8px);
+  background: var(--surface-3);
+  border: 1px solid var(--rule);
+}
+
+.ph-data__card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.ph-data__card-title {
+  width: 70%;
+  height: 14px;
+}
+
+.ph-data__card-body {
+  width: 90%;
+  height: 10px;
+}
+
+/* ════════════ Timeline 形状 ════════════ */
+
+.ph-data__timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.ph-data__timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rule);
+}
+
+.ph-data__tl-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.ph-data__tl-dot {
+  position: absolute;
+  left: -24px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-soft);
+  background: var(--surface-2);
+  z-index: 1;
+  animation: none;
+}
+
+.ph-data__tl-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 12px;
+}
+
+.ph-data__tl-title {
+  width: 50%;
+  height: 14px;
+}
+
+.ph-data__tl-desc {
+  width: 80%;
+  height: 10px;
+}
+
+/* ════════════ 标签行 ════════════ */
+
+.ph-data__label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+}
+
+.ph-data__label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mute);
+}
+
+.ph-data__source {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}

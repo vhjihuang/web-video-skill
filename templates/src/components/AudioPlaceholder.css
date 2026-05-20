@@ -1,0 +1,121 @@
+/* ============================================================
+ * AudioPlaceholder.css — 音频占位符样式
+ * ============================================================ */
+
+.ph-audio {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 16px 20px;
+  border-radius: var(--r-card, 8px);
+  background: var(--surface-2);
+  border: 2px dashed var(--rule);
+  max-width: 480px;
+  min-width: 280px;
+}
+
+/* ── 状态变体边框色 ── */
+.ph-audio--missing {
+  border-color: var(--accent-soft);
+}
+.ph-audio--pending {
+  border-color: var(--text-faint);
+}
+.ph-audio--ready {
+  border-color: var(--accent);
+  border-style: solid;
+  opacity: 0.7;
+}
+.ph-audio--error {
+  border-color: #e53e3e; /* 错误红，功能性固定值 */
+  background: rgba(229, 62, 62, 0.05);
+}
+
+/* ── 紧凑模式 ── */
+.ph-audio--compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  min-width: unset;
+  max-width: 360px;
+}
+
+.ph-audio--compact .ph-audio__waveform {
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.ph-audio--compact .ph-audio__preview {
+  display: none;
+}
+
+/* ── 波形条 ── */
+.ph-audio__waveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 36px;
+  padding: 0 4px;
+}
+
+.ph-audio__bar {
+  flex: 1;
+  min-width: 2px;
+  max-width: 6px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--text-faint);
+  transition: height 300ms var(--ease-quart);
+}
+
+.ph-audio--missing .ph-audio__bar {
+  background: var(--accent-soft);
+  animation: ph-wave-idle 1.8s ease-in-out infinite alternate;
+}
+
+.ph-audio--ready .ph-audio__bar {
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+@keyframes ph-wave-idle {
+  from { opacity: 0.25; }
+  to   { opacity: 0.7; }
+}
+
+/* ── 元数据行 ── */
+.ph-audio__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.ph-audio__duration {
+  color: var(--text-2);
+  font-weight: 600;
+  tabular-nums: true;
+}
+
+.ph-audio__status {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+}
+
+/* ── 文本预览 ── */
+.ph-audio__preview {
+  font-family: var(--font-display-cn);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--text-mute);
+  margin: 0;
+  font-style: italic;
+}

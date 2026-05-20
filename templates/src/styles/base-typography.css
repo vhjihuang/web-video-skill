@@ -1,0 +1,367 @@
+/* ============================================================
+ * base-typography.css — 共享排版模式层
+ *
+ * @version 2.0 (2026-05-19)
+ * @changes v1→v2: 新增 .ty-sub-title/.ty-body-sm/.ty-label;
+ *           ty-cue 修正 16px→18px; ty-body 上调 28px→32px;
+ *           新增 --semantic-* 变量（终端色/警告色）
+ *
+ * 用途：提供章节间可复用的排版 class，减少每章 CSS 重复量。
+ * 设计原则：
+ *   - 颜色/字体仍走 token（不破坏主题切换）
+ *   - 字号使用 CHAPTER-CRAFT.md 硬性下限值或以上
+ *   - 这些是"常用模式"不是"强制消费"——章节可以不用
+ *   - 并行开发时 subagent 只读不写此文件
+ *
+ * 覆盖的常见重复模式（约占每章 CSS 的 40~50%）：
+ *   .ty-hero       全屏主标题 (L1: ≥80px)
+ *   .ty-sub-title  章节大标题 (L2: ≥56px)     ← v2 新增
+ *   .ty-sub        副标题 / kicker (L3: ≥48px)
+ *   .ty-body       正文 / 列表项 (L4: ≥32px)   ← v2 上调(原28)
+ *   .ty-body-sm    次要文字 (L5: ≥24px)        ← v2 新增
+ *   .ty-cue        标注 / 元数据 (L6: ≥18px)
+ *   .ty-label      小标签 (L7: ≥16px)          ← v2 新增
+ *   .ty-list       列表容器
+ *   .ty-list-item  单个列表项（带逐项揭示动画）
+ *   .ty-compare    对比布局（左 vs 右）
+ *   .ty-data-row   数据行（标签 + 值）
+ *   .ty-quote      引用块
+ * ============================================================ */
+
+/* ── Hero 标题 ── */
+.ty-hero {
+  font-family: var(--font-display-cn);
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.ty-hero--sub {
+  font-size: 80px;
+  font-weight: 700;
+}
+
+.ty-hero--accent {
+  color: var(--accent);
+}
+
+/* ── 章节大标题（L2，v2 新增）── */
+.ty-sub-title {
+  font-family: var(--font-display-cn);
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.ty-sub-title--muted {
+  color: var(--text-2);
+}
+
+/* ── 副标题 / Kicker（L3）── */
+.ty-sub {
+  font-family: var(--font-display-cn);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-2);
+}
+
+.ty-kicker {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ── 正文 / 列表项（L4，v2 上调 28→32）── */
+.ty-body {
+  font-family: var(--font-display-cn);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.ty-body--muted {
+  color: var(--text-mute);
+}
+
+.ty-body--accent {
+  color: var(--accent);
+}
+
+/* ── 次要文字（L5，v2 新增）── */
+.ty-body-sm {
+  font-family: var(--font-display-cn);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.ty-body-sm--muted {
+  color: var(--text-mute);
+}
+
+/* ── 标注 / Cue / 元数据（L6，v2 修正 16→18）── */
+.ty-cue {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+}
+
+.ty-cue--muted {
+  opacity: 0.5;
+}
+
+/* ── 小标签（L7，v2 新增）── */
+.ty-label {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.ty-label--accent {
+  color: var(--accent);
+}
+
+/* ── 列表容器 ── */
+.ty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ty-list--horizontal {
+  flex-direction: row;
+  gap: 32px;
+}
+
+/* ── 列表项（逐项揭示用） ── */
+.ty-item {
+  font-family: var(--font-display-cn);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text-2);
+  padding-left: 24px;
+  position: relative;
+  transition: color var(--dur-base) var(--ease-quart),
+              opacity var(--dur-base) var(--ease-quart);
+}
+
+.ty-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-quart);
+}
+
+.ty-item.is-active {
+  color: var(--text);
+}
+.ty-item.is-active::before {
+  opacity: 1;
+}
+
+.ty-item.is-dimmed {
+  color: var(--text-faint);
+  opacity: 0.35;
+}
+
+/* ── 对比布局（左 vs 右） ── */
+.ty-compare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  width: 100%;
+}
+
+.ty-compare__side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+}
+
+.ty-compare__value {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.ty-compare__value--accent {
+  color: var(--accent);
+}
+
+.ty-compare__label {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.ty-compare__divider {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 48px;
+  color: var(--text-faint);
+  opacity: 0.3;
+}
+
+/* ── 数据行（标签 + 值） ── */
+.ty-data-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.ty-data-row__label {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--text-mute);
+  min-width: 120px;
+}
+
+.ty-data-row__value {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ty-data-row__value--accent {
+  color: var(--accent);
+}
+
+/* ── 引用块 ── */
+.ty-quote {
+  border-left: 4px solid var(--accent);
+  padding: 20px 32px;
+  font-family: var(--font-display-cn);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-2);
+  font-style: italic;
+  max-width: 800px;
+}
+
+.ty-quote__source {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-faint);
+  margin-top: 8px;
+  font-style: normal;
+}
+
+/* ── 数字强调 ── */
+.ty-number {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--accent);
+  tabular-nums: true;
+}
+
+.ty-number--large {
+  font-size: 96px;
+  line-height: 1;
+}
+
+.ty-number--medium {
+  font-size: 56px;
+  line-height: 1;
+}
+
+/* ── 通用文字揭示动画 ── */
+.ty-reveal-up {
+  animation: ty-slide-up var(--dur-base) var(--ease-quart) both;
+}
+
+@keyframes ty-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ty-reveal-scale {
+  animation: ty-scale-in var(--dur-base) var(--ease-overshoot) both;
+}
+
+@keyframes ty-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── 划掉效果（对比场景） ── */
+.ty-strikethrough {
+  position: relative;
+}
+
+.ty-strikethrough::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 50%;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-expo);
+}
+
+.ty-strikethrough.is-struck::after {
+  transform: scaleX(1);
+}
+
+/* ── 语义性颜色变量（v2 新增，用于 SEMANTIC-HARDCODE 例外场景）──
+ *
+ * 这些颜色模拟真实物体的标志性外观，不应随主题切换而改变。
+ * 使用方式：var(--semantic-terminal-red) 而非直接写 #ff5f56
+ * 详见 CHEATSHEET.md「🔶 语义性硬编码例外」章节
+ */
+:root {
+  --semantic-terminal-red: #ff5f56;
+  --semantic-terminal-yellow: #ffbd2e;
+  --semantic-terminal-green: #27c93f;
+  --semantic-warning: #ff3b30;
+  --semantic-error: #dc3545;
+}
