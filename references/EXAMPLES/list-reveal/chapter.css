@@ -59,7 +59,9 @@
   gap: var(--space-5);
 }
 
-/* ── slot base ── */
+/* ✅ 槽位基础样式：transition 覆盖 opacity/filter/border-color
+     → active↔past↔ghost 切换时平滑过渡，不会生硬跳变。
+     如果 transition:none → 亮→暗瞬间切换，观众感知为"闪烁" */
 .lr-slot {
   border-radius: var(--r-card);
   padding: var(--space-5);
@@ -88,6 +90,8 @@
   background: var(--surface);
   box-shadow: var(--shadow-card);
 }
+/* ✅ 数字砸下：backwards + keyframe 从 opacity:0 + translateY(-40%)
+     → delay 期间元素不可见，入场时从上方砸下。同 stamp 模式 */
 .lr-slot-active .lr-slot-num {
   color: var(--accent);
   animation: lr-num-drop var(--dur-base) var(--ease-quart) backwards;

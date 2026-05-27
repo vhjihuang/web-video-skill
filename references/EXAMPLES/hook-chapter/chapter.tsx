@@ -1,3 +1,5 @@
+// ANCHOR NOTE: 参考结构骨架，不继承本文件的具体动效授权。
+// glow / infinite / ken-burns 只在内容需要且不抢焦点时少量使用；默认不要照抄。
 // ⚠️ 这是 anchor 参考代码，不会被任何项目编译。
 //    抄到真实项目时（presentation/src/chapters/NN-hook/），
 //    把下面两个 import 改成：

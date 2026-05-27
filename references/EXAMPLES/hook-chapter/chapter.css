@@ -83,6 +83,9 @@
   object-fit: cover;
   display: block;
 }
+/* ✅ 印章砸下：backwards + keyframe 从 opacity:0 开始
+     → delay 期间元素保持不可见，不会闪烁。
+     如果用 forwards 且 keyframe 不从 0 开始 → delay 期间先闪一下 */
 .hk-stamp {
   position: absolute;
   top: var(--space-4);
@@ -147,6 +150,8 @@
   from { transform: scale(2.4); opacity: 0; }
   to   { transform: scale(1);  opacity: 1; }
 }
+/* ✅ 红条生长：backwards + keyframe 从 scaleX(0) 开始
+     同上，delay 期间保持不可见/不可见状态 */
 .hk-accent-bar {
   width: 60%;
   height: 4px;
