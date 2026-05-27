@@ -356,7 +356,9 @@ export function MyChapter({ step }: ChapterStepProps) {
 
 ## 硬规则（必须遵守）
 - CSS 前缀：本章专属前缀（如 `.cd-` / `.mg-` / `.pm-`），禁止跨章污染
-- 必读：`references/CHAPTER-RULES-MINI.md`（硬规则速查，~100 行）
+- **Narration Gate（§2.5）**：narrations 必须从 script.md 切分/改写，禁止从 outline 摘写；信息保有率 ≥ 60%；偏差 >20% 需确认
+- **SCRIPT-STYLE.md**：narrations 文本必须符合（对话体/第二人称/短句≤20字/去AI味）
+- 必读：`references/CHAPTER-RULES-MINI.md`（硬规则速查，~260 行）
 - 必读：`references/EXAMPLES/` 中匹配本章类型的 ANCHOR-CARD.md（卡住才读 README + 代码）
 - 完工自检：跑 `npm run validate`，fail 项修复后才算完成
 ```
@@ -387,9 +389,10 @@ ROLE-TAG 枚举：EMOTION-HOOK | CONTRAST-REVEAL | STAMP-OST | TAKEOVER | TEASER
 > **但**：若实际 step 数 < outline 声明的 **80%**（偏差 > 20%），必须**停下并告知用户确认**后再继续（Narration Gate G4）。
 > 静默接受大幅缩减会纵容信息丢失（失败案例：某项目偏差 58% 时信息保留率仅 7%，详见 CHAPTER-RULES-MINI §2.5）。
 
-1. **`references/CHAPTER-RULES-MINI.md`** — 每章必读（硬规则速查，~100行）
-2. **`references/EXAMPLES/<匹配章节类型的anchor>/ANCHOR-CARD.md`** — 必读卡（~20行），卡住才读 README+代码
-3. **[双源落地] 回 article.md 抽取本章额外信息**
+1. **`references/CHAPTER-RULES-MINI.md`** — 每章必读（H1-H7 + H1-b + Narration Gate §2.5 + Ledger 模板 + Anti-patterns）
+2. **`references/SCRIPT-STYLE.md`** — narrations 文本质量规则（对话体/第二人称/短句≤20字/去AI味）
+3. **`references/EXAMPLES/<匹配章节类型的anchor>/ANCHOR-CARD.md`** — 必读卡（~20行），卡住才读 README+代码
+4. **[双源落地] 回 article.md 抽取本章额外信息**
    - 触发条件、动作、输出、标准与范例保持不变（保持现有内容）
 
 > ⚠️ **第 1 章**额外读 `references/CHAPTER-CRAFT.md` 完整版（含教程式解释）；第 2~N 章可只读 CHAPTER-CRAFT Part 0 十条原则
@@ -503,7 +506,7 @@ npm run synthesize-audio     # 调 mmx 串行合成；增量、跳过已存在
 |------|---------|-----------|
 | `script.md` | `references/SCRIPT-STYLE.md` 三层自检 | — |
 | `outline.md` | `references/OUTLINE-FORMAT.md` 自检 | — |
-| 单章实现完成 | `references/CHAPTER-RULES-MINI.md` §7 完工自检清单（9 项） | `npm run validate`（C1/C2/C4/C6/C7） |
+| 单章实现完成 | `references/CHAPTER-RULES-MINI.md` §6 完工自检清单（11 项） | `npm run validate`（C1/C2/C4/C6/C7） |
 
 **执行方式**（按能力降级）：Agent Teams → subAgent → self review
 
@@ -544,7 +547,7 @@ npm run synthesize-audio     # 调 mmx 串行合成；增量、跳过已存在
 | `references/ARTICLE-PROCESS-GUIDE.md` | Content Phase 必读 | 处理杂乱原始素材的通用预处理指南 |
 | `references/SCRIPT-STYLE.md` | Content Phase 必读 | 文章 → 口播稿规则、平台变体 |
 | `references/OUTLINE-FORMAT.md` | Content Phase 必读 | outline.md 字段 spec、命名约定、信息池 |
-| `references/CHAPTER-RULES-MINI.md` | Chapter Phase 必读 | H1-H7 + Ledger 模板 + Anti-patterns |
+| `references/CHAPTER-RULES-MINI.md` | Chapter Phase 必读 | H1-H7 + **H1-b NARRATION-SOURCE** + **Narration Gate §2.5**(G1-G6) + Ledger 模板 + Anti-patterns |
 | `references/CHAPTER-CRAFT.md` | Chapter Phase 第 1 章必读 | Part 0~8 全部内容 |
 | `MATERIAL-INDEX.md` | Chapter Phase 每章必读 | 项目根目录，article.md 按章节索引 |
 | `references/AUDIO.md` | Production Phase 必读 | mmx-cli、TTS 降级路径、故障排查 |
