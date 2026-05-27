@@ -283,6 +283,25 @@ rm -rf presentation/src/chapters/01-example
 并把 `presentation/src/registry/chapters.ts` 里 `EXAMPLE_CHAPTER`
 的 import 和数组项移除。
 
+### Chapter Phase（Ledger → Signature Move → React 实现）⭐ 最频繁
+
+### 加载清单
+
+| | 内容 |
+|---|------|
+| **什么时候进** | 实现或修改任何一个章节的 TSX + CSS |
+| **目标产出** | `<Chapter>.tsx` + `<Chapter>.css>` + `narrations.ts` + Final Ledger |
+| **必读** | `references/CHAPTER-RULES-MINI.md`（H1-H7 + H1-b + Narration Gate §2.5 + Ledger 模板 + Anti-patterns） |
+| **必读** | `references/EXAMPLES/<匹配类型>/ANCHOR-CARD.md`（开工前必读） |
+| **必读** | 当前章 `outline.md` 片段 + `MATERIAL-INDEX.md` 本章条目 + `theme.json` |
+| **必读** | `references/SCRIPT-STYLE.md`（narrations 文本质量的唯一规则来源，写/改 narrations 时必须加载） |
+| **禁读** | ❌ ARTICLE-PROCESS-GUIDE（内容已准备好）<br>❌ OUTLINE-FORMAT（outline 已定稿）<br>❌ AUDIO.md / RECORDING.md（生产阶段规则）<br>❌ 其他章节的代码（只看第 1 章作为风格 anchor） |
+| **按需** | `src/components/patterns/` 组件源码（API 卡住时才查）<br>`references/CHAPTER-CRAFT.md`（第 1 章必读完整版；第 2~N 章只读 Part 0） |
+| **开工动作** | 先执行 **Narration Gate（CHAPTER-RULES-MINI §2.5，6 条硬门槛）** → 输出 Draft Step Focus Ledger → 确认后再写代码 |
+| **完工动作** | 输出 Final Ledger + Narration Gate G1-G6 结果 + 跑 `npm run validate` |
+
+> **⚠️ Chapter Phase 是最高频操作（每章一次 × N 章）。** 严格遵循"禁读"列表是节省 token 的关键。
+
 ### 2.2 第 1 章 —— 主线程 + 强制验收
 
 **核心**：第 1 章 = 完整版本一次到位（节奏 + 视觉 + 真素材齐全）。
@@ -376,6 +395,10 @@ rm -rf presentation/src/chapters/01-example
 改动 `chapters.ts`（增加 / 删除 / 重排章节，或某章 `narrations.ts`
 长度变化）后，**bump** `presentation/src/hooks/useStepper.ts` 的
 `STORAGE_KEY`（如 `v4` → `v5`），避免持久化游标落到不存在的 step 上。
+
+> narrations.ts 是运行时真相，outline.md 是规划参考。实际 step 数 > outline → 更新 outline 对齐，不回退。
+> **但**：若实际 step 数 < outline 声明的 **80%**（偏差 > 20%），必须**停下并告知用户确认**后再继续（Narration Gate G4）。
+> 静默接受大幅缩减会纵容信息丢失（失败案例：某项目偏差 58% 时信息保留率仅 7%，详见 CHAPTER-RULES-MINI §2.5）。
 
 ### 2.6 章节完成后验证（推荐）
 
