@@ -60,7 +60,7 @@
 | `outline.md` | 开发计划（信息密度源） | **agent Phase 1.2** 生成 | **用户** Checkpoint Plan 审核 | Phase 2 开发时可同步 step 数 |
 | `MATERIAL-INDEX.md` | article → 素材索引 | **Phase 0 自动生成** | **agent Phase 2.4 每章必读**（位于项目根目录，替代读完整 article） | article 预处理时更新 |
 | `CHAPTER-CRAFT.md` | 章节开发完整教程 | Skill 作者 | **仅第 1 章** agent 读 | 不常变 |
-| `CHAPTER-CRAFT-CHEATSHEET.md` | 章节开发红线速查 | Skill 作者 | **第 2~N 章** agent 读 | 随完整版同步 |
+| `CHAPTER-CRAFT-CHEATSHEET.md` | 章节开发深度参考（视觉分级/决策树/安全区） | Skill 作者 | **第 2~N 章按需参考**（必读已浓缩到 CHAPTER-RULES-MINI.md） | 随完整版同步 |
 
 ---
 
@@ -93,8 +93,8 @@
   - 抽查验证：随机选 2 个 source，确认 article.md 对应位置内容匹配
   - [SKIP] 区域占比合理（应占全文 50-80%）
 
-□ 渲染建议可执行性：
-  - 每个 [MUST] 项的 render-hint 具体且可实现（非泛泛的"做图表"）
+□ 视觉角色分配：
+  - 每个 [MUST] 项的 visual-role 值属于合法枚举（hook-reveal | comparison-proof | ...），不含 CSS/动画词（[OUTLINE-BOUNDARY]）
   - 不包含需要外部资源才能实现的效果（如"用原文图片"）
 ```
 
@@ -167,7 +167,7 @@
   label: "<人类可读描述>"
   type: text-quote | data | case | term-pair | comparison | concept
   source: article §X LYY-ZZ           # 必须：MATERIAL-INDEX 可用区域
-  render-hint: <渲染建议>             # 可选
+  visual-role: <叙事功能>            # 可选（hook-reveal / comparison-proof / ...）
   priority: must | should | optional   # 可选，默认 should
   for-steps: [step编号...]            # 🆕 v2.0 必填：素材→step 映射
 ```
@@ -182,14 +182,14 @@
 - step N (~Ts) — <屏幕内容，≥ 2 个视觉维度>
 
 **type 枚举速查**：
-| type | 含义 | 典型 render-hint |
+| type | 含义 | 典型 visual-role |
 |------|------|-------------------|
-| `text-quote` | 可引用文字片段 | contrast-card / pull-quote |
-| `data` | 数字/比例/统计 | counter / progress-bar |
-| `case` | 案例/故事/人物线 | timeline-cards |
-| `term-pair` | ❌→✅ 术语对比 | split-left-right |
-| `comparison` | A vs B 对比 | strike-transition |
-| `concept` | 概念/原理/方法论 | svg-pyramid / flow-step |
+| `text-quote` | 可引用文字片段 | single-proof / quote-evidence |
+| `data` | 数字/比例/统计 | single-proof / comparison-proof |
+| `case` | 案例/故事/人物线 | list-progress / process-map |
+| `term-pair` | ❌→✅ 术语对比 | comparison-proof |
+| `comparison` | A vs B 对比 | comparison-proof |
+| `concept` | 概念/原理/方法论 | process-map |
 ```
 
 **画面感要求**（每步描述必须包含 ≥ 2 个视觉维度）：
@@ -317,7 +317,7 @@ src/chapters/01-<id>/material-usage.ts # 🆕 v2.0 推荐：素材使用追踪
 
 #### 2.2.5 完工自检（8 项核心 + 10 项建议）
 
-> 详见 [CHAPTER-CRAFT-CHEATSHEET.md](references/CHAPTER-CRAFT-CHEATSHEET.md)「完工自检清单」章节。
+> 详见 [CHAPTER-RULES-MINI.md](references/CHAPTER-RULES-MINI.md) §7 完工自检清单，或 [CHAPTER-CRAFT-CHEATSHEET.md](references/CHAPTER-CRAFT-CHEATSHEET.md)「完工自检清单」章节获取完整版。
 
 **🔴 核心必查（8 项，阻塞交付）**：
 
@@ -360,11 +360,13 @@ src/chapters/01-<id>/material-usage.ts # 🆕 v2.0 推荐：素材使用追踪
 | 文件 | 第 1 章 | 第 2~N 章 |
 |------|---------|----------|
 | CHAPTER-CRAFT | **完整版**（223 行，含教程解释） | **跳过** |
-| CHAPTER-CRAFT-CHEATSHEET | 不需要 | **必读**（~100 行红线） |
+| CHAPTER-RULES-MINI | 不需要 | **必读**（~93 行硬规则速查） |
+| ANCHOR-CARD | 不需要 | **开工前必读**（~22 行结构卡） |
+| CHAPTER-CRAFT-CHEATSHEET | 不需要 | 按需深度参考（视觉分级/决策树） |
 | MATERIAL-INDEX.md | 可选 | **必读**（本章段落，~80 行，根目录查找） |
 | 第 1 章代码 | 不需要 | **作为风格参考传入 prompt**（不是抄袭对象） |
 
-**Token 节省**：第 2~N 章每章少读 ~200 行（完整版 → 浓缩版 + 替代 article 为 Material Guide）
+**Token 节省**：第 2~N 章每章必读 ~115 行（MINI 93 + ANCHOR-CARD 22），替代旧 CHEATSHEET ~100 行 + article 全文
 
 #### 2.3.2 三种开发模式
 
@@ -505,7 +507,8 @@ SKILL.md (流程宪法)
   │   ├── OUTLINE-FORMAT.md ──── Phase 1.2 (outline spec, 含 v2 YAML 信息池)
   │   │   └── 画面感写作规范
   │   ├── CHAPTER-CRAFT.md ───── Phase 2.2 仅第1章 (完整教程)
-  │   ├── CHAPTER-CRAFT-CHEATSHEET.md ── Phase 2.3 第2~N章 (红线速查)
+  │   ├── CHAPTER-RULES-MINI.md ──── Phase 2.3 第2~N章 (硬规则速查, 93行)
+  │   ├── CHAPTER-CRAFT-CHEATSHEET.md ── 按需深度参考 (视觉分级/决策树/安全区)
   │   │   ├── 十条原则
   │   │   ├── 开工 5 问
   │   │   ├── 决策树

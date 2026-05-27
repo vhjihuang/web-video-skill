@@ -14,6 +14,7 @@
 #   6. 无动画类型 / CSS 手段等非法字段
 #   7. 画面感：每步描述包含 ≥ 2 个视觉维度关键词
 #   8. 信息池 ≥ 50% 条目被分配到具体 step
+#   9. 连续 step 视觉多样性 + 素材来源有效性
 #
 # 退出码：
 #   0 = 全部通过
@@ -53,7 +54,7 @@ log_pass "文件存在 (${FILE_SIZE} bytes)"
 
 # ── 1. metadata block ──
 echo ""
-echo "${bold}[1/8] 顶部 metadata block${reset}"
+echo "${bold}[1/9] 顶部 metadata block${reset}"
 
 if grep -q '^>' "$OUTLINE" && grep -q '主题' "$OUTLINE"; then
   log_pass "metadata block 存在"
@@ -71,7 +72,7 @@ fi
 
 # ── 2. 章节结构 ──
 echo ""
-echo "${bold}[2/8] 章节结构与信息池${reset}"
+echo "${bold}[2/9] 章节结构与信息池${reset}"
 
 CHAPTER_COUNT=$(grep -cE '^## \d+\.' "$OUTLINE" || true)
 if [[ "$CHAPTER_COUNT" -ge 1 ]]; then
@@ -104,7 +105,7 @@ done < <(grep -nE '^## \d+\.' "$OUTLINE")
 
 # ── 3. step 数范围 ──
 echo ""
-echo "${bold}[3/8] step 数范围（每章 3~8 步）${reset}"
+echo "${bold}[3/9] step 数范围（每章 3~8 步）${reset}"
 
 STEP_RANGE_PASS=0
 while IFS= read -r line; do
@@ -123,7 +124,7 @@ done < <(grep -nE '^## \d+\.' "$OUTLINE")
 
 # ── 4. 时长累加 vs 声明总时长 ──
 echo ""
-echo "${bold}[4/8] step 估时累加 vs 声明总时长${reset}"
+echo "${bold}[4/9] step 估时累加 vs 声明总时长${reset}"
 
 TOTAL_SECS=0
 STEP_COUNT_TOTAL=0
@@ -155,7 +156,7 @@ fi
 
 # ── 5. 非法字段检查 ──
 echo ""
-echo "${bold}[5/8] 非法字段（不应出现动画类型 / CSS 手段 / 具体毫秒数）${reset}"
+echo "${bold}[5/9] 非法字段（不应出现动画类型 / CSS 手段 / 具体毫秒数）${reset}"
 
 ILLEGAL_PATTERNS=(
   "blur clear"
@@ -183,7 +184,7 @@ done
 
 # ── 6. 画面感检查 ──
 echo ""
-echo "${bold}[6/8] 画面感（每步应包含 ≥ 2 个视觉维度关键词）${reset}"
+echo "${bold}[6/9] 画面感（每步应包含 ≥ 2 个视觉维度关键词）${reset}"
 
 FOCUS_WORDS="中央|右上角|左下角|底部|全屏|上方|下方|左侧|右侧|居中|焦点"
 LAYER_WORDS="kicker|上下文|层次|主.*副|保留|缩小|放大|灰化|背景|前景|叠加"
@@ -230,7 +231,7 @@ fi
 
 # ── 7. 信息池利用率 ──
 echo ""
-echo "${bold}[7/8] 信息池利用率（≥ 50% 条目应被分配到具体 step）${reset}"
+echo "${bold}[7/9] 信息池利用率（≥ 50% 条目应被分配到具体 step）${reset}"
 
 if [[ "$INFO_POOL_TOTAL" -gt 0 ]]; then
   ASSIGNED=0
@@ -253,7 +254,7 @@ fi
 
 # ── 8. 连续视觉变化 ──
 echo ""
-echo "${bold}[8/8] 连续 step 视觉多样性${reset}"
+echo "${bold}[8/9] 连续 step 视觉多样性${reset}"
 
 MONOTONE=0
 PREV_KEYWORD=""

@@ -155,6 +155,12 @@ cp "$TEMPLATES/scripts/extract-narrations.ts"  scripts/extract-narrations.ts
 cp "$TEMPLATES/scripts/synthesize-audio.sh"    scripts/synthesize-audio.sh
 chmod +x scripts/synthesize-audio.sh
 
+cp "$SKILL_DIR/scripts/validate.sh" "scripts/validate.sh"
+chmod +x "scripts/validate.sh"
+
+cp "$SKILL_DIR/scripts/ledger-check.sh" "scripts/ledger-check.sh"
+chmod +x "scripts/ledger-check.sh"
+
 # Wire the audio scripts into npm so contributors don't have to remember
 # the exact command. Uses node to merge into the existing package.json.
 node -e '
@@ -163,6 +169,8 @@ const p = JSON.parse(fs.readFileSync("package.json", "utf8"));
 p.scripts = Object.assign({}, p.scripts, {
   "extract-narrations": "tsx scripts/extract-narrations.ts",
   "synthesize-audio":   "bash scripts/synthesize-audio.sh",
+  "validate": "bash scripts/validate.sh",
+  "ledger-check": "bash scripts/ledger-check.sh",
 });
 fs.writeFileSync("package.json", JSON.stringify(p, null, 2) + "\n");
 '
@@ -218,18 +226,11 @@ cat <<EOF
 
 写章节时必读（单一入口，路径在 SKILL 仓库内）：
 
-  • $SKILL_DIR/references/CHAPTER-CRAFT.md
-      Part 0 十条原则 / Part 1 开工 5 问 / Part 2 关系→动作决策树 /
-      Part 3 视觉工具箱 / Part 4 时长 / Part 5 反 AI 味反模式 /
-      Part 6 代码硬规则 / Part 7 完工自检 / Part 8 反馈速查
-  • $SKILL_DIR/themes/$THEME/theme.json
-      看 descriptionZh / mood / bestFor —— 参考主题气质
-      （动画 / 时长 / 字号 / emoji 由 chapter agent 在每章自由决定）
-
-卡壳时可翻：
-
+  • $SKILL_DIR/references/CHAPTER-RULES-MINI.md
+      硬规则速查
   • $SKILL_DIR/references/EXAMPLES/
-      完整章节 anchor（钩子型 / 列举型）—— 看"形"，不要照搬
+      ANCHOR-CARD.md —— 看"形"，不要照搬
+  • 开工前输出 Draft Step Focus Ledger
 
 要换一个主题，覆盖 tokens.css 即可：
   cp $SKILL_DIR/themes/<id>/tokens.css src/styles/tokens.css

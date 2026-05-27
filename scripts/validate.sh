@@ -1,17 +1,20 @@
 #!/bin/bash
 # Web Video Presentation Validator MVP
 # 基于 FAILURE_ANALYSIS.md 45 个 Case 提取的客观检测项
-# 用法: cd presentation && bash ../scripts/validate.sh
+# 用法: cd <project-root> && bash scripts/validate.sh
 # 退出码: 0=全部通过, 1=有FAIL项
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-PRESENTATION_DIR="${PROJECT_ROOT}/presentation"
 
-if [ ! -d "$PRESENTATION_DIR" ]; then
-  echo "❌ 找不到 presentation/ 目录，请在 skill 根目录运行"
+# validate.sh 已经在项目内的 scripts/ 目录
+# PROJECT_ROOT 就是项目根目录，不需要再加 presentation/
+PRESENTATION_DIR="$PROJECT_ROOT"
+
+if [ ! -f "package.json" ]; then
+  echo "❌ 找不到 package.json，请在项目根目录运行: bash scripts/validate.sh"
   exit 1
 fi
 

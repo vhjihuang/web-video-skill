@@ -15,7 +15,7 @@
 #   4. 生成 narrations.ts（空数组）
 #   5. 注册到 src/registry/chapters.ts
 #
-# 注意：生成的只是骨架模板，实际内容需按 CHAPTER-CRAFT-CHEATSHEET.md 填充。
+# 注意：生成的只是骨架模板，实际内容需按 CHAPTER-RULES-MINI.md + ANCHOR-CARD.md 填充。
 # ─────────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -98,7 +98,7 @@ import "./${COMPONENT_NAME}.css";
 /**
  * ${TITLE}
  *
- * 按 CHAPTER-CRAFT-CHEATSHEET.md 十条原则开发：
+ * 按 CHAPTER-RULES-MINI.md 十条原则开发：
  * - 每步独占整屏 (if (step === N) return ...)
  * - 至少 1~2 处 CSS/SVG/Canvas/JS 视觉演示
  * - 清单逐个揭示 (1 项 = 1 step)
@@ -209,4 +209,4 @@ echo "  1. 打开 ${COMPONENT_NAME}.tsx 按 outline 填充每步内容"
 echo "  2. 打开 narrations.ts 填写口播文本"
 echo "  3. 打开 ${COMPONENT_NAME}.css 编写样式（记得用 token）"
 echo "  4. 跑 npx tsc --noEmit 确认类型正确"
-echo "  5. 按 CHAPTER-CRAFT-CHEATSHEET.md 完工自检清单逐项核查"
+echo "  5. 按 CHAPTER-RULES-MINI.md §7 完工自检清单逐项核查"
