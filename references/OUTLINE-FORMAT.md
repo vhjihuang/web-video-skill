@@ -112,7 +112,7 @@ pull-quote 引用 / 数据浮层。
   label: "核心痛点：新领域想学但觉得太难"
   type: text-quote           # 枚举：text-quote / data / case / term-pair / comparison / concept
   source: article §1 L4-L8    # 必须：对应 MATERIAL-INDEX.md 的可用区域
-  render-hint: contrast-card   # 建议：contrast-card / terminal / pyramid-layer / counter / flow-step
+  visual-role: comparison-proof  # 建议：hook-reveal / single-proof / list-progress / comparison-proof / process-map
   priority: must              # must / should / optional
   for-steps: [1, 2]           # 建议分配到哪些 step（可选）
   narration-hint: "就是觉得太难了，不知道从哪下手"  # 口播补充方向（可选）
@@ -121,7 +121,7 @@ pull-quote 引用 / 数据浮层。
   label: "对比：找专家花钱 / 自己研究花时间"
   type: comparison
   source: article §1 L10-L11
-  render-hint: strike-transition
+  visual-role: list-progress
   priority: must
 ```
 
@@ -133,7 +133,7 @@ pull-quote 引用 / 数据浮层。
 | `label` | ✓ | 人类可读描述（agent 挂到画面上的文字方向） |
 | `type` | ✓ | 素材类型枚举（见下方类型表） |
 | `source` | ✓ | 来源定位（`article §X LYY-ZZ` 或 `MATERIAL-INDEX #N-M`），校验时检查是否在可用区域 |
-| `render-hint` | 建议 | 渲染建议（给 agent 的视觉演示方向提示） |
+| `visual-role` | 建议 | 视觉角色（按叙事功能命名，严禁 CSS/动画/时间数值） |
 | `priority` | 建议 | must = 必须用 / should = 建议用 / optional = 有更好 |
 | `for-steps` | 可选 | 建议分配到的 step 编号数组 |
 | `narration-hint` | 可选 | 口播补充措辞方向（帮助 agent 保持口语风格一致性） |
@@ -303,6 +303,7 @@ pull-quote 引用 / 数据浮层。
 - [ ] **[v2 专属] 信息池 `source` 字段引用的区域不在 MATERIAL-INDEX.md 的 [SKIP] 列表中（若存在）**
 - [ ] **[v2 专属] 信息池 `id` 在全文件中唯一（无重复）**
 - [ ] **[v2 专属] 信息池 `type` 值属于合法枚举（text-quote/data/case/term-pair/comparison/concept）**
+- [ ] **`visual-role` 值不含 CSS 关键词、时间数值、动画名称**（检查到 `fadeIn`、`0.8s`、`@keyframes` 等 → fail [OUTLINE-BOUNDARY]）
 
 写完看一眼：**outline 是不是干净到 chapter agent 看了能立刻开工 + 还有
 设计空间**？是 = 合格。如果你看了都觉得"太空，agent 不知道动画选什么"

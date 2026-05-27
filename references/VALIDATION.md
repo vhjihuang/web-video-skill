@@ -5,14 +5,14 @@
 ## 快速开始
 
 ```bash
-cd presentation
-bash ../scripts/validate.sh
+# 在项目根目录运行
+npm run validate
 ```
 
-或（如果在 skill 根目录）：
+或直接：
 
 ```bash
-npm run validate
+bash scripts/validate.sh
 ```
 
 ## 检测项详解
@@ -22,8 +22,8 @@ npm run validate
 | **C1** | narrations 一致性 | #16 | 🔴 致命 | 检查 `.tsx` 中 `step === N` 的最大 N+1 是否等于 `narrations.length` |
 | **C2** | TypeScript 编译 | #26, #27 | 🔴 致命 | 运行 `npx tsc --noEmit` 修复所有类型错误 |
 | **C4** | 字号下限 | #12 | 🟡 警告 | 对照下限表调整：hero≥80px, h1≥56px, body≥32px, cue≥18px |
-| **C6** | 动画时长 ≤ 口播时长 | **#20** | 🔴 致命 | 缩短动画时长或拆分 step；Auto 模式下超时=录屏崩溃 |
-| **C7** | CSS Prefix 隔离 | #18 | 🔴 致命 | 确保每章使用独立前缀（`.cd-` / `.mg-` / `.pm-` 等） |
+| **C6** | 动画时长 ≤ 口播时长 | **#20** | 🔴 致命 | 缩短动画时长或拆分 step；Auto 模式下超时=录屏崩溃<br>**→ 对应 Rule-ID: [NO-TIMER]** |
+| **C7** | CSS Prefix 隔离 | #18 | 🔴 致命 | 确保每章使用独立前缀（`.cd-` / `.mg-` / `.pm-` 等）<br>**→ 对应 Rule-ID: [CSS-PREFIX]** |
 
 ## 退出码
 

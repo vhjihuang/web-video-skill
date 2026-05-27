@@ -55,8 +55,8 @@
   - 抽查验证：随机选 2 个 source，确认 article.md 对应位置内容匹配
   - [SKIP] 区域占比合理（应占全文 50-80%）
 
-□ 渲染建议可执行性检查：
-  - 每个 [MUST] 项的 render-hint 具体且可实现
+□ 视觉角色分配检查：
+  - 每个 [MUST] 项的 visual-role 值属于合法枚举，不包含 CSS/动画/时间数值（[OUTLINE-BOUNDARY]）
   - 不包含需要外部资源才能实现的效果（如"用原文图片"）
 ```
 
@@ -75,7 +75,7 @@
 | 某章 [MUST] 项不足 | 该章节内容本身稀疏 | 回 article.md 重新审视是否有遗漏的可视化元素 |
 | source 定位错误 | 行号在预处理过程中偏移 | 重新核对 article.md 实际行号 |
 | [SKIP] 区域占比过低 | 可能误将可用素材标记为 SKIP | 审查 SKIP 区域，将误标的素材移回对应章节 |
-| render-hint 过于抽象 | 如"做图表"、"展示数据" | 改为具体可执行的描述，如"用 CSS counter 动画展示数字增长" |
+| visual-role 过于抽象 | 如"做图表"、"展示数据" | 改为叙事功能命名，如 comparison-proof / list-progress / process-map |
 
 > **详细规范与标准**：参见项目根目录 `MATERIAL-INDEX.md` 的「素材使用规范（v2.0 新增）」章节。
 

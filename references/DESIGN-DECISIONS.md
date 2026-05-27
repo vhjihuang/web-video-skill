@@ -113,7 +113,7 @@
 
 **来源**：SKILL.md 各阶段文件读取指南 / talking.md "注意力预算"
 
-**规则**：第 1 章读完整版 CHAPTER-CRAFT.md，第 2~N 章只读 CHEATSHEET。
+**规则**：第 1 章读完整版 CHAPTER-CRAFT.md，第 2~N 章读 CHAPTER-RULES-MINI.md + ANCHOR-CARD.md。
 
 **为什么**：
 
@@ -135,7 +135,9 @@ CHAPTER-CRAFT.md 完整版约 **300+ 行**，包含：
 | 读取对象 | 内容 | 适用场景 | 行数 |
 |---------|------|---------|------|
 | CHAPTER-CRAFT.md | 完整版（含教程式解释） | **仅第 1 章** | ~300+ |
-| CHAPTER-CRAFT-CHEATSHEET.md | 浓缩红线版（硬规则+自检） | **第 2~N 章** | ~100 |
+| CHAPTER-RULES-MINI.md | 硬规则速查（Rule-ID + 信息密度 + 反模式 + 自检） | **第 2~N 章必读** | ~93 |
+| ANCHOR-CARD.md | 章节类型结构卡（22行） | **每章开工前必读** | ~22 |
+| CHAPTER-CRAFT-CHEATSHEET.md | 视觉分级库 / 决策树 / 安全区检测 | 按需深度参考 | ~100 |
 | CORE-PRINCIPLES.md | 5 条高层原则 + 10 条详细索引 | 想理解"为什么"时按需 | ~120 |
 | DESIGN-DECISIONS.md（本文件） | 设计决策背后的理由 | 边界情况/首次使用 | ~50 |
 
