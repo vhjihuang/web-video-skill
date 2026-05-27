@@ -68,7 +68,8 @@ skills/web-video-presentation/
 ├── SKILL.md
 ├── README.md / README.zh-CN.md
 ├── references/
-│   ├── PRINCIPLES.md
+│   ├── CORE-PRINCIPLES.md
+│   ├── CHAPTER-RULES-MINI.md
 │   ├── CHAPTER-CRAFT.md
 │   ├── OUTLINE-FORMAT.md
 │   ├── SCRIPT-STYLE.md
@@ -132,11 +133,12 @@ Skill 内置多套主题，每套都有自己的设计 DNA，不只是换色：
 
 ## Reference Map
 
-- [PRINCIPLES.md](./references/PRINCIPLES.md)：视频感网页演示的核心原则
-- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md)：章节实现规则与视觉 checklist
+- [CORE-PRINCIPLES.md](./references/CORE-PRINCIPLES.md)：视频感网页演示的核心原则与架构约束
+- [CHAPTER-RULES-MINI.md](./references/CHAPTER-RULES-MINI.md)：每章硬规则速查（93 行）
+- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md)：第 1 章完整版教程式实现指南
+- [CHAPTER-CRAFT-CHEATSHEET.md](./references/CHAPTER-CRAFT-CHEATSHEET.md)：视觉分级库 / 决策树 / 安全区检测（按需参考）
 - [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md)：outline 必须遵循的结构
 - [SCRIPT-STYLE.md](./references/SCRIPT-STYLE.md)：文章转口播稿规则
-- [PATTERNS.md](./references/PATTERNS.md)：可选视觉 primitive 配方
 - [AUDIO.md](./references/AUDIO.md)：可选口播音频合成流程
 - [RECORDING.md](./references/RECORDING.md)：录屏与后期注意事项
 

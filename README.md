@@ -68,7 +68,8 @@ skills/web-video-presentation/
 ├── SKILL.md
 ├── README.md / README.zh-CN.md
 ├── references/
-│   ├── PRINCIPLES.md
+│   ├── CORE-PRINCIPLES.md
+│   ├── CHAPTER-RULES-MINI.md
 │   ├── CHAPTER-CRAFT.md
 │   ├── OUTLINE-FORMAT.md
 │   ├── SCRIPT-STYLE.md
@@ -132,11 +133,12 @@ See [THEMES.md](./references/THEMES.md) for the full token contract and theme gu
 
 ## Reference Map
 
-- [PRINCIPLES.md](./references/PRINCIPLES.md) — core rules for video-like web presentations
-- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md) — chapter implementation rules and visual checklist
+- [CORE-PRINCIPLES.md](./references/CORE-PRINCIPLES.md) — core principles and architecture constraints
+- [CHAPTER-RULES-MINI.md](./references/CHAPTER-RULES-MINI.md) — per-chapter hard rules quick reference (93 lines)
+- [CHAPTER-CRAFT.md](./references/CHAPTER-CRAFT.md) — full tutorial for Chapter 1 implementation
+- [CHAPTER-CRAFT-CHEATSHEET.md](./references/CHAPTER-CRAFT-CHEATSHEET.md) — visual grading library / decision tree / safety zones (按需参考)
 - [OUTLINE-FORMAT.md](./references/OUTLINE-FORMAT.md) — required outline structure
 - [SCRIPT-STYLE.md](./references/SCRIPT-STYLE.md) — article-to-narration rewrite guidance
-- [PATTERNS.md](./references/PATTERNS.md) — optional visual primitive recipes
 - [AUDIO.md](./references/AUDIO.md) — optional narration synthesis workflow
 - [RECORDING.md](./references/RECORDING.md) — screen recording and post-production notes
 
